@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Events;
 using Newtonsoft.Json;
-using Task;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -12,9 +12,21 @@ public class TaskManager : MonoBehaviour
     [SerializeField] private UITask uiTask;
 
     private const string GetTasksUrl = "https://localhost:44386/Task/GetCurrentUserTasks";
-    private const string TokenKey = "jwt_token"; // Ключ, под которым хранится токен в PlayerPrefs
-
+    private const string UserID = "UserID"; // Ключ, под которым хранится токен в PlayerPrefs
+    
+    [SerializeField] private TaskVoidEventChannelSO onTaskCreated;
+    
     // Метод для получения всех задач пользователя
+
+    private void OnEnable()
+    {
+        onTaskCreated.OnEventRaised += InstantiateTask;
+    }
+
+    private void OnDisable()
+    {
+        onTaskCreated.OnEventRaised -= InstantiateTask;
+    }
 
     private void Start()
     {
@@ -26,19 +38,12 @@ public class TaskManager : MonoBehaviour
         StartCoroutine(GetTasksCoroutine());
     }
 
-    // Coroutine для получения задач
     private IEnumerator GetTasksCoroutine()
     {
-        string token = PlayerPrefs.GetString(TokenKey, null);
+        var userID = PlayerPrefs.GetInt(UserID, 0);
+        Debug.Log(userID);
 
-        if (string.IsNullOrEmpty(token))
-        {
-            Debug.LogError("Токен отсутствует. Необходима авторизация.");
-            yield break;
-        }
-
-        UnityWebRequest request = UnityWebRequest.Get(GetTasksUrl);
-       // request.SetRequestHeader("Authorization", "Bearer " + token); // Добавляем токен в заголовок
+        UnityWebRequest request = UnityWebRequest.Get(GetTasksUrl + "?userId=" + userID);
 
         yield return request.SendWebRequest();
 
@@ -55,10 +60,9 @@ public class TaskManager : MonoBehaviour
             // Преобразуем JSON ответ в список задач
             var tasks = JsonConvert.DeserializeObject<List<Task.Task>>(request.downloadHandler.text);
 
-            // Обрабатываем задачи (например, отображаем их в UI)
             foreach (var task in tasks)
             {
-                Debug.Log("Задача: " + task.Title + " Описание: " + task.Description);
+                InstantiateTask(task);
             }
         }
         else

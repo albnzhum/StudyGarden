@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Events;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -64,9 +65,10 @@ public class Authorization : MonoBehaviour
         {
             // Получаем токен из ответа
             string jsonResponse = request.downloadHandler.text;
-            var responseData = JsonUtility.FromJson<UserID>(jsonResponse);
+            var responseData = JsonConvert.DeserializeObject<UserID>(jsonResponse);
+            Debug.Log(responseData.id);
 
-            PlayerPrefs.SetInt("UserID", responseData.ID);
+            PlayerPrefs.SetInt("UserID", responseData.id);
         }
         else
         {
@@ -123,7 +125,7 @@ public class UserModel
 [Serializable]
 public class UserID
 {
-    public int ID;
+    public int id;
 }
 
 [Serializable]
