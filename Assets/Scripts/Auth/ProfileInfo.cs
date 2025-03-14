@@ -10,8 +10,6 @@ public class ProfileInfo : MonoBehaviour
 {
     [SerializeField] private TMP_Text _username;
     
-    private const string AuthUrl = "https://localhost:44386/Auth/GetCurrentUser";
-
     private void OnEnable()
     {
        // StartCoroutine(GetTasksCoroutine());
@@ -19,7 +17,7 @@ public class ProfileInfo : MonoBehaviour
     
     private IEnumerator GetTasksCoroutine()
     {
-        UnityWebRequest request = UnityWebRequest.Get(AuthUrl );
+        UnityWebRequest request = UnityWebRequest.Get(EndpointMapper.GetPlantsByPlantTypeIDUrl );
 
         yield return request.SendWebRequest();
 

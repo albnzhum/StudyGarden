@@ -10,6 +10,7 @@ public class TokenReader : MonoBehaviour
     [SerializeField] private VoidEventChannelSO gameSceneLoader;
 
     public UnityAction CheckTokenEvent = default;
+    private const string TokenKey = "jwt_token";  
 
     private void OnEnable()
     {
@@ -26,8 +27,6 @@ public class TokenReader : MonoBehaviour
         StartCoroutine(CheckToken());
     }
 
-    private const string AuthCheckUrl = "https://localhost:44386/Auth/CheckToken";
-    private const string TokenKey = "jwt_token";  
 
     private IEnumerator CheckToken()
     {
@@ -48,7 +47,7 @@ public class TokenReader : MonoBehaviour
     
     public IEnumerator CheckTokenValidity(System.Action<bool, string> callback)
     {
-        string token = PlayerPrefs.GetString(TokenKey, null);
+        string token = PlayerPrefs.GetString(TokenKey);
 
         if (string.IsNullOrEmpty(token))
         {
@@ -56,8 +55,8 @@ public class TokenReader : MonoBehaviour
             yield break;
         }
 
-        UnityWebRequest request = UnityWebRequest.Get(AuthCheckUrl);
-       request.SetRequestHeader("token", token);
+        UnityWebRequest request = UnityWebRequest.Get(EndpointMapper.CheckToken + token);
+       //request.SetRequestHeader("token", token);
 
         yield return request.SendWebRequest();
 

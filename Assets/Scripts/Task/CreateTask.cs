@@ -17,9 +17,9 @@ public class CreateTask : MonoBehaviour
     [SerializeField] private TMP_Dropdown plant;
     [SerializeField] private TMP_Dropdown priority;
     
-    private const string AddTaskUrl = "https://localhost:44386/Task/AddNewTask";
-    private const string LoadCategoryUrl = "https://localhost:44386/Category/GetCurrentUserCategories"; // Ваш URL для добавления задачи
-    private const string LoadPlantsUrl = "https://localhost:44386/Plant/GetAllPlants";
+    private const string AddTaskUrl = "http://localhost:5107/CreateTask";
+    private const string LoadCategoryUrl = "http://localhost:5107/GetAllUserCategory"; // Ваш URL для добавления задачи
+    private const string LoadPlantsUrl = "http://localhost:5107/GetAllPlants";
     private const string UserID = "UserID";
 
     [SerializeField] private TaskVoidEventChannelSO onTaskCreated;
@@ -35,13 +35,15 @@ public class CreateTask : MonoBehaviour
         // Собираем данные из UI
         var newTask = new Task.Task
         {
-            Title = titleText.text,
-            UserID = PlayerPrefs.GetInt(UserID, 0),
-            Description = descriptionText.text,
-            CategoryID = category.value+1,  // Предполагаем, что категории задаются через индекс
-            PlantID = plant.value+1,  // Предполагаем, что категории задаются через индекс
-            Priority = (Priority)priority.value,  // Преобразуем индекс Dropdown в enum Priority
-            Status = Status.NotStarted,  // По умолчанию задача создается со статусом "Не начата"
+            title = titleText.text,
+            userID = PlayerPrefs.GetInt(UserID, 0),
+            description = descriptionText.text,
+            categoryID = category.value+1,  // Предполагаем, что категории задаются через индекс
+            plantID = plant.value+1,  // Предполагаем, что категории задаются через индекс
+            priority = (Priority)priority.value, 
+            createdDate = DateTime.Today.Date,
+            dueDate = DateTime.Now.Date.AddDays(1),// Преобразуем индекс Dropdown в enum Priority
+            status = Status.InProgress,  // По умолчанию задача создается со статусом "Не начата"
         };
 
         StartCoroutine(AddTaskCoroutine(newTask));
@@ -87,13 +89,15 @@ public class CreateTask : MonoBehaviour
 
     private IEnumerator AddTaskCoroutine(Task.Task newTask)
     {
-        var userID = PlayerPrefs.GetInt(UserID, 0);
-        
         // Преобразуем задачу в JSON
-        string jsonTask = JsonUtility.ToJson(newTask);
+        string jsonTask = JsonConvert.SerializeObject(newTask, new JsonSerializerSettings
+        {
+            DateFormatString = "yyyy-MM-dd" // Формат только даты
+        });
+        Debug.Log(jsonTask);
 
         // Создаем POST-запрос
-        UnityWebRequest request = new UnityWebRequest(AddTaskUrl + "?userId=" + userID, "POST");
+        UnityWebRequest request = new UnityWebRequest(AddTaskUrl,  "POST" );
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonTask);
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();

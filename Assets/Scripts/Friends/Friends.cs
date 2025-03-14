@@ -9,7 +9,7 @@ public class Friends : MonoBehaviour
     [SerializeField] private UIFriend friend;
     [SerializeField] private Transform parent;
 
-    private const string GetFriendUrl = "https://localhost:44386/Friend/GetAllFriends";
+    private const string GetFriendUrl = "http://localhost:5107/GetAllFriends";
     private const string UserID = "UserID"; // Ключ, под которым хранится токен в PlayerPrefs
 
 
@@ -18,7 +18,7 @@ public class Friends : MonoBehaviour
         
     }
     
-    private IEnumerator GetTasksCoroutine()
+    private IEnumerator GetFriends()
     {
         var userID = PlayerPrefs.GetInt(UserID, 0);
         
@@ -50,11 +50,33 @@ public class Friends : MonoBehaviour
         }
     }
     
-    private void InstantiateTask(Task.Task taskToSet)
+  /*  private void OnSearchValueChanged(string searchText)
     {
-        GameObject friendGO = Instantiate(friend.gameObject, parent);
-        UIFriend task = friendGO.GetComponent<UIFriend>();
-      //  task.Set(taskToSet);
+        // Фильтруем список пользователей
+        List<string> filteredUsers = allUsers
+            .Where(user => user.ToLower().Contains(searchText.ToLower()))
+            .ToList();
+
+        // Обновляем отображение
+        DisplayUsers(filteredUsers);
+    }*/
+
+    private void DisplayUsers(List<string> users)
+    {
+        // Удаляем старые элементы
+        foreach (Transform child in parent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Создаем новые элементы для отображения
+        foreach (string user in users)
+        {
+            GameObject userItem = Instantiate(friend.gameObject, parent);
+            var friendUI = userItem.GetComponent<UIFriend>();
+            friendUI.Set(user.ToLower());
+             // Устанавливаем имя пользователя
+        }
     }
 }
 

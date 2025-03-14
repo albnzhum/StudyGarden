@@ -3168,6 +3168,46 @@ MonoBehaviour:
   loginInput: {fileID: 1729445275}
   passwordInput: {fileID: 1050881902}
   AuthUserEvent: {fileID: 11400000, guid: 0aff8b9eef53b7a48a4617d7af1de64c, type: 2}
+--- !u!21 &1294864204
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI/RoundedCorners/RoundedCorners
+  m_Shader: {fileID: 4800000, guid: 0bd2ec5d73751e34a814274a454bec41, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
+    - _WidthHeightRadius: {r: 389, g: 130, b: 120, a: 0}
+  m_BuildTextureStacks: []
 --- !u!1 &1362632695
 GameObject:
   m_ObjectHideFlags: 0
@@ -3608,6 +3648,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1500131055}
   - component: {fileID: 1500131054}
+  - component: {fileID: 1500131056}
   m_Layer: 0
   m_Name: Authorization
   m_TagString: Untagged
@@ -3646,6 +3687,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1500131056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500131053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3460fc5afc1a2b408874b477d78f5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onJWTTokenGet: {fileID: 11400000, guid: 98cae0cbd7e56e140b04eec6ab7c6496, type: 2}
+  loginPanel: {fileID: 1813356218}
 --- !u!1 &1504558628
 GameObject:
   m_ObjectHideFlags: 0
@@ -4634,14 +4689,13 @@ GameObject:
   - component: {fileID: 1813356221}
   - component: {fileID: 1813356220}
   - component: {fileID: 1813356219}
-  - component: {fileID: 1813356224}
   m_Layer: 5
   m_Name: Auth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1813356219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4725,19 +4779,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1813356224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1813356218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3460fc5afc1a2b408874b477d78f5e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onJWTTokenGet: {fileID: 11400000, guid: 98cae0cbd7e56e140b04eec6ab7c6496, type: 2}
 --- !u!1 &1882802398
 GameObject:
   m_ObjectHideFlags: 0
@@ -5123,7 +5164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 1943717709}
+  m_Material: {fileID: 1294864204}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -5149,46 +5190,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917396850}
   m_CullTransparentMesh: 1
---- !u!21 &1943717709
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: UI/RoundedCorners/RoundedCorners
-  m_Shader: {fileID: 4800000, guid: 0bd2ec5d73751e34a814274a454bec41, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _ColorMask: 15
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _UseUIAlphaClip: 0
-    m_Colors:
-    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
-    - _WidthHeightRadius: {r: 389, g: 130, b: 120, a: 0}
-  m_BuildTextureStacks: []
 --- !u!1 &1999958080
 GameObject:
   m_ObjectHideFlags: 0

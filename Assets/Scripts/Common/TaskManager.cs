@@ -11,13 +11,10 @@ public class TaskManager : MonoBehaviour
     [SerializeField] private Transform parent;
     [SerializeField] private UITask uiTask;
 
-    private const string GetTasksUrl = "https://localhost:44386/Task/GetCurrentUserTasks";
     private const string UserID = "UserID"; // Ключ, под которым хранится токен в PlayerPrefs
     
     [SerializeField] private TaskVoidEventChannelSO onTaskCreated;
     
-    // Метод для получения всех задач пользователя
-
     private void OnEnable()
     {
         onTaskCreated.OnEventRaised += InstantiateTask;
@@ -43,7 +40,7 @@ public class TaskManager : MonoBehaviour
         var userID = PlayerPrefs.GetInt(UserID, 0);
         Debug.Log(userID);
 
-        UnityWebRequest request = UnityWebRequest.Get(GetTasksUrl + "?userId=" + userID);
+        UnityWebRequest request = UnityWebRequest.Get(EndpointMapper.GetAllTasks + userID);
 
         yield return request.SendWebRequest();
 

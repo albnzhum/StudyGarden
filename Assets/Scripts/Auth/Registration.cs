@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using API.Contracts.Authorization;
 using Events;
 using TMPro;
 using UnityEngine;
@@ -8,8 +9,6 @@ using UnityEngine.Networking;
 
 public class Registration : MonoBehaviour
 {
-    private const string RegisterUrl = "https://localhost:44386/Auth/Register";
-
     [SerializeField] private TMP_InputField loginInput;
     [SerializeField] private TMP_InputField passwordInput;
 
@@ -35,15 +34,15 @@ public class Registration : MonoBehaviour
         // Создаем объект для отправки данных
         UserModel userData = new UserModel
         {
-            Username = username,
-            Password = password
+            login = username,
+            password = password
         };
 
         // Преобразуем объект в JSON
         string jsonData = JsonUtility.ToJson(userData);
 
         // Создаем запрос
-        UnityWebRequest request = new UnityWebRequest(RegisterUrl, "POST");
+        UnityWebRequest request = new UnityWebRequest(EndpointMapper.Register, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();

@@ -7,6 +7,7 @@ using UnityEngine;
 public class AuthManager : MonoBehaviour
 {
     [SerializeField] private VoidEventChannelSO onJWTTokenGet;
+    [SerializeField] private GameObject loginPanel;
 
     private void Awake()
     {
@@ -20,6 +21,6 @@ public class AuthManager : MonoBehaviour
 
     private void Show()
     {
-        gameObject.SetActive(true);
+        loginPanel.SetActive(true);
     }
 }

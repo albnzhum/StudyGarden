@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 namespace Task
 {
@@ -12,18 +13,17 @@ namespace Task
     [Serializable]
     public class Task
     {
-        public int ID;
+        public string title;
+        public string description;
+        public int userID;
 
-        public int UserID;
-        public string Title;
-        public string Description;
-        public int CategoryID;
-        public int PlantID;
+        public int plantID;
+        public int categoryID;
 
-        public DateTime CreatedDate;
-        public DateTime DueDate ;
-        public Status Status;
-        public Priority Priority;
+        public DateTime createdDate;
+        public DateTime dueDate ;
+        public Status status;
+        public Priority priority;
     }
 
     public enum Status

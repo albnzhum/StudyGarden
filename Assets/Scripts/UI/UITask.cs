@@ -19,6 +19,6 @@ public class UITask : MonoBehaviour
 
     public void SetTaskUI()
     {
-        nameTask.text = task.Title;
+        nameTask.text = task.title;
     }
 }
